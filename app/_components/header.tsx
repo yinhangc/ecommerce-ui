@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ChevronDownIcon,
   CurrencyDollarIcon,
   GlobeAltIcon,
   ShoppingCartIcon,
@@ -10,6 +11,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import logo from "@/public/logo.png";
+import Dropdown from "./ui/dropdown";
+
+const dropdownProps = {
+  language: {
+    icon: <GlobeAltIcon className="h-7 w-7" />,
+    options: [
+      { label: "繁體中文", value: "zh" },
+      { label: "English", value: "en" },
+    ],
+    defaultValue: "zh",
+  },
+  currency: {
+    icon: <CurrencyDollarIcon className="h-7 w-7" />,
+    options: [
+      { label: "HKD", value: "hkd" },
+      { label: "TWD", value: "twd" },
+    ],
+    defaultValue: "hkd",
+  },
+};
 
 export default function Header() {
   const scrollTrackerRef = useRef<HTMLDivElement>(null);
@@ -36,46 +57,59 @@ export default function Header() {
     <>
       <div
         ref={scrollTrackerRef}
-        className="opacity-1 pointer-events-none absolute top-2 z-20 h-6 w-6"
+        className="pointer-events-none absolute top-2 z-20 h-6 w-6 opacity-0"
       ></div>
       <header
-        className={`sticky top-0 z-10 flex w-full flex-col bg-white transition-all duration-300 ${isShrink ? "h-[180px]" : "h-[280px]"}`}
+        className={`sticky top-0 z-10 flex w-full flex-col bg-white transition-all duration-300 ${isShrink ? "h-[170px]" : "h-[280px]"}`}
       >
-        <div className="mx-auto flex h-[80%] max-h-full w-full max-w-7xl items-center justify-between px-6 py-4">
-          <div className="flex gap-4">
-            <div className="cursor-pointer">
-              <GlobeAltIcon className="h-7 w-7" />
-            </div>
-            <div className="cursor-pointer">
-              <CurrencyDollarIcon className="h-7 w-7" />
-            </div>
+        <div
+          className={`mx-auto flex w-full max-w-7xl items-center px-6 py-4 ${isShrink ? "h-[80%]" : "h-[70%]"}`}
+        >
+          <div className="flex basis-2/6 items-center gap-4">
+            <Dropdown {...dropdownProps.language} />
+            <Dropdown {...dropdownProps.currency} />
           </div>
-          <div>
-            <Image src={logo} alt="Logo" height={isShrink ? 140 : 220} />
+          <div
+            className={`basis-2/6 transition-all duration-500 ${isShrink ? "h-[150px]" : "h-[200px]"}`}
+          >
+            <Image
+              src={logo}
+              alt="Logo"
+              style={{
+                display: "block",
+                height: "100%",
+                width: "auto",
+                margin: "auto",
+              }}
+            />
           </div>
-          <div className="flex gap-4">
-            <div className="cursor-pointer">
-              <UserIcon className="h-7 w-7" />
-            </div>
-            <div className="cursor-pointer">
+          <div className="flex basis-2/6 items-center justify-end gap-5">
+            <button>
+              <Link href="/login" className="flex items-center gap-1">
+                <UserIcon className="h-7 w-7" />
+                登入
+              </Link>
+            </button>
+            <button className="flex items-center gap-1">
               <ShoppingCartIcon className="h-7 w-7" />
-            </div>
+              購物籃
+            </button>
           </div>
         </div>
-        <nav className="h-[20%]">
-          <ul className="flex max-h-full items-center justify-center bg-twine-400 py-4 text-white">
+        <nav className={`${isShrink ? "h-[20%]" : "h-[30%]"}`}>
+          <ul className="flex max-h-full items-center justify-center bg-twine-500 py-4 text-white">
             <li>
-              <Link href="/beans" className="px-4">
+              <Link href="/" className="px-5">
                 主頁
               </Link>
             </li>
             <li>
-              <Link href="/beans" className="px-4">
+              <Link href="/beans" className="px-5">
                 咖啡豆
               </Link>
             </li>
             <li>
-              <Link href="/accessories" className="px-4">
+              <Link href="/accessories" className="px-5">
                 配件
               </Link>
             </li>

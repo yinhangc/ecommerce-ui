@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AdjustmentsHorizontalIcon,
   Bars3BottomLeftIcon,
@@ -6,6 +8,8 @@ import Dropdown, { DropdownProps } from "../_components/ui/dropdown";
 import brazilBeansImg from "@/public/brazil-cerrado-natural.png";
 import colombiaBeansImg from "@/public/colombia-medellin-supremo.png";
 import Image from "next/image";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 const dropdownProps: { [key: string]: DropdownProps } = {
   roastLevel: {
@@ -265,28 +269,58 @@ const productsData = [
   },
 ];
 
+interface BeansFormInput {
+  roastLevel: string;
+  origin: string;
+  sortBy: string;
+}
+
 export default function Beans() {
+  const { setValue, watch } = useForm<BeansFormInput>();
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) =>
+      console.log("subscription", value),
+    );
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   return (
     <section className="mx-auto max-w-7xl px-6 py-8">
       <h2 className="mb-8 text-3xl font-semibold">咖啡豆</h2>
       {/* Filter */}
-      <div className="mb-8 flex w-full items-center justify-between">
+      <form
+        className="mb-8 flex w-full items-center justify-between"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <div className="flex w-full items-center gap-3">
           <div className="flex min-w-[60px] items-center gap-1">
             <AdjustmentsHorizontalIcon className="h-6 w-6" />
             <span className="min-w-[35px]">選擇:</span>
           </div>
-          <Dropdown {...dropdownProps["roastLevel"]} />
-          <Dropdown {...dropdownProps["origin"]} />
+          <Dropdown
+            {...dropdownProps["roastLevel"]}
+            formKey="roastLevel"
+            setValue={setValue}
+          />
+          <Dropdown
+            {...dropdownProps["origin"]}
+            formKey="origin"
+            setValue={setValue}
+          />
         </div>
         <div className="flex w-full items-center justify-end gap-3">
           <div className="flex min-w-[60px] items-center gap-1">
             <Bars3BottomLeftIcon className="h-6 w-6" />
             <span className="min-w-[40px]">排序:</span>
           </div>
-          <Dropdown {...dropdownProps["sortBy"]} />
+          <Dropdown
+            {...dropdownProps["sortBy"]}
+            formKey="sortBy"
+            setValue={setValue}
+          />
         </div>
-      </div>
+      </form>
       {/* Products */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-8">
         {productsData.map(({ id, name, image }) => (

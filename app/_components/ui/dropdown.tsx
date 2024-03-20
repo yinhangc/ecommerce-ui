@@ -1,15 +1,18 @@
-"use client";
-
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
 import find from "lodash/find";
+import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 export interface DropdownProps {
-  icon?: React.ReactNode;
   options: {
     label: string;
     value: string;
   }[];
+  // react-hook-form
+  formKey?: string;
+  setValue?: UseFormSetValue<any>;
+  // react-hook-form EOL
+  icon?: React.ReactNode;
   type?: "hover" | "click";
   variant?: "standard" | "outline";
   defaultValue?: string;
@@ -20,18 +23,21 @@ export interface DropdownProps {
 
 export default function Dropdown(props: DropdownProps) {
   const {
-    icon,
     options,
+    formKey,
+    setValue,
+    icon,
     type = "hover",
     variant = "standard",
     defaultValue = "",
     style = {},
   } = props;
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [value, setValue] = useState<string>(defaultValue);
+  const [formValue, setFormValue] = useState<string>(defaultValue);
   const [menuVisible, setMenuVisible] = useState(false);
 
-  const displayLabel = find(options, { value })?.label || "---SELECT ONE---";
+  const displayLabel =
+    find(options, { value: formValue })?.label || "---SELECT ONE---";
   const showMenuCondition =
     (menuVisible && type === "click") || type === "hover";
 
@@ -45,6 +51,11 @@ export default function Dropdown(props: DropdownProps) {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, [type]);
+
+  useEffect(() => {
+    console.log("formKey, setValue", !!formKey && !!setValue);
+    if (!!formKey && !!setValue) setValue(formKey, formValue);
+  }, [formKey, formValue, setValue]);
 
   return (
     <div
@@ -67,9 +78,9 @@ export default function Dropdown(props: DropdownProps) {
           {options.map((option) => (
             <li
               key={option.value}
-              className="hover:text-leather-500 px-4 py-2 transition-all hover:font-bold"
+              className="px-4 py-2 transition-all hover:font-bold hover:text-leather-500"
               onClick={() => {
-                setValue(option.value);
+                setFormValue(option.value);
                 setMenuVisible(false);
               }}
             >

@@ -1,15 +1,15 @@
 "use client";
 
+import brazilBeansImg from "@/public/brazil-cerrado-natural.png";
+import colombiaBeansImg from "@/public/colombia-medellin-supremo.png";
 import {
   AdjustmentsHorizontalIcon,
   Bars3BottomLeftIcon,
 } from "@heroicons/react/24/outline";
-import Dropdown, { DropdownProps } from "../_components/ui/dropdown";
-import brazilBeansImg from "@/public/brazil-cerrado-natural.png";
-import colombiaBeansImg from "@/public/colombia-medellin-supremo.png";
 import Image from "next/image";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import Dropdown, { DropdownProps } from "../_components/ui/dropdown";
 
 const dropdownProps: { [key: string]: DropdownProps } = {
   roastLevel: {
@@ -280,7 +280,7 @@ export default function Beans() {
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) =>
-      console.log("subscription", value),
+      console.log("beans subscription", value),
     );
     return () => subscription.unsubscribe();
   }, [watch]);

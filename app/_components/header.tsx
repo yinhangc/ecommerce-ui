@@ -1,7 +1,7 @@
 "use client";
 
+import logo from "@/public/logo.png";
 import {
-  ChevronDownIcon,
   CurrencyDollarIcon,
   GlobeAltIcon,
   ShoppingCartIcon,
@@ -10,7 +10,13 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import logo from "@/public/logo.png";
+import { useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  Language,
+  selectTranslations,
+  setLanguage,
+} from "../redux/slices/i18n.slice";
 import Dropdown, { DropdownProps } from "./ui/dropdown";
 
 const dropdownProps: { [key: string]: DropdownProps } = {
@@ -32,9 +38,26 @@ const dropdownProps: { [key: string]: DropdownProps } = {
   },
 };
 
+interface HeaderFormInput {
+  language: Language;
+  currency: string;
+}
+
 export default function Header() {
+  const t = useAppSelector(selectTranslations);
+  const dispatch = useAppDispatch();
   const scrollTrackerRef = useRef<HTMLDivElement>(null);
   const [isShrink, setIsShrink] = useState(false);
+  const { setValue, watch } = useForm<HeaderFormInput>();
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      console.log("header subscription", value);
+      const { language, currency } = value;
+      dispatch(setLanguage(language as Language));
+    });
+    return () => subscription.unsubscribe();
+  }, [dispatch, watch]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -66,8 +89,16 @@ export default function Header() {
           className={`mx-auto flex w-full max-w-7xl items-center px-6 ${isShrink ? "py-0" : "py-4"}`}
         >
           <div className="flex basis-2/6 items-center gap-4">
-            <Dropdown {...dropdownProps.language} />
-            <Dropdown {...dropdownProps.currency} />
+            <Dropdown
+              {...dropdownProps.language}
+              formKey="language"
+              setValue={setValue}
+            />
+            <Dropdown
+              {...dropdownProps.currency}
+              formKey="currency"
+              setValue={setValue}
+            />
           </div>
           <div
             className={`basis-2/6 transition-all duration-500 ${isShrink ? "h-[140px]" : "h-[200px]"}`}
@@ -87,13 +118,13 @@ export default function Header() {
             <button>
               <Link href="/login" className="flex items-center gap-1">
                 <UserIcon className="h-7 w-7" />
-                登入
+                {t.header.nav_login}
               </Link>
             </button>
             <button>
               <Link href="/cart" className="flex items-center gap-1">
                 <ShoppingCartIcon className="h-7 w-7" />
-                購物車
+                {t.header.nav_cart}
               </Link>
             </button>
           </div>
@@ -102,17 +133,17 @@ export default function Header() {
           <ul className="bg-leather-500 flex h-full items-center justify-center py-4 text-white">
             <li>
               <Link href="/" className="px-6">
-                主頁
+                {t.header.nav_home}
               </Link>
             </li>
             <li>
               <Link href="/beans" className="px-6">
-                咖啡豆
+                {t.header.nav_beans}
               </Link>
             </li>
             <li>
               <Link href="/accessories" className="px-6">
-                配件
+                {t.header.nav_accessories}
               </Link>
             </li>
           </ul>

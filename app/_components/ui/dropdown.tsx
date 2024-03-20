@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { useEffect, useRef, useState } from "react";
 import find from "lodash/find";
-import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
+import { UseFormSetValue } from "react-hook-form";
 
 export interface DropdownProps {
   options: {
@@ -53,7 +53,6 @@ export default function Dropdown(props: DropdownProps) {
   }, [type]);
 
   useEffect(() => {
-    console.log("formKey, setValue", !!formKey && !!setValue);
     if (!!formKey && !!setValue) setValue(formKey, formValue);
   }, [formKey, formValue, setValue]);
 
@@ -78,7 +77,7 @@ export default function Dropdown(props: DropdownProps) {
           {options.map((option) => (
             <li
               key={option.value}
-              className="px-4 py-2 transition-all hover:font-bold hover:text-leather-500"
+              className="hover:text-leather-500 px-4 py-2 transition-all hover:font-bold"
               onClick={() => {
                 setFormValue(option.value);
                 setMenuVisible(false);

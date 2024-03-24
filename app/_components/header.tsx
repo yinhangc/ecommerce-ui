@@ -11,12 +11,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../_redux/hooks";
 import {
   Language,
   selectTranslations,
   setLanguage,
-} from "../redux/slices/i18n.slice";
+} from "../_redux/slices/i18n.slice";
 import Dropdown, { DropdownProps } from "./ui/dropdown";
 
 const dropdownProps: { [key: string]: DropdownProps } = {
@@ -43,7 +43,7 @@ interface HeaderFormInput {
   currency: string;
 }
 
-export default function Header() {
+const Header = () => {
   const t = useAppSelector(selectTranslations);
   const dispatch = useAppDispatch();
   const scrollTrackerRef = useRef<HTMLDivElement>(null);
@@ -151,4 +151,6 @@ export default function Header() {
       </header>
     </>
   );
-}
+};
+
+export default Header;

@@ -21,7 +21,7 @@ export interface DropdownProps {
   };
 }
 
-export default function Dropdown(props: DropdownProps) {
+const Dropdown: React.FC<DropdownProps> = (props) => {
   const {
     options,
     formKey,
@@ -90,4 +90,6 @@ export default function Dropdown(props: DropdownProps) {
       )}
     </div>
   );
-}
+};
+
+export default Dropdown;

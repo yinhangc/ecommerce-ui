@@ -9,7 +9,8 @@ import {
 import Image from "next/image";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Dropdown, { DropdownProps } from "../_components/ui/dropdown";
+import Dropdown, { DropdownProps } from "../../_components/ui/dropdown";
+import Link from "next/link";
 
 const dropdownProps: { [key: string]: DropdownProps } = {
   roastLevel: {
@@ -275,7 +276,7 @@ interface BeansFormInput {
   sortBy: string;
 }
 
-export default function Beans() {
+const BeansPage = () => {
   const { setValue, watch } = useForm<BeansFormInput>();
 
   useEffect(() => {
@@ -325,13 +326,17 @@ export default function Beans() {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-8">
         {productsData.map(({ id, name, image }) => (
           <div key={id} className="cursor-pointer">
-            <Image src={image} alt={name} />
-            <div className="mt-3">
-              <h3 className="text-xl">{name}</h3>
-            </div>
+            <Link href={`/beans/${id}`} className="inline-block h-full w-full">
+              <Image src={image} alt={name} />
+              <div className="mt-3">
+                <h3 className="text-xl">{name}</h3>
+              </div>
+            </Link>
           </div>
         ))}
       </div>
     </section>
   );
-}
+};
+
+export default BeansPage;

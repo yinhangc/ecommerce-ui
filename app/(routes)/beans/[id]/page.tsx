@@ -1,9 +1,24 @@
 "use client";
 
+import Carousel from "@/app/_components/ui/carousel";
 import RadioSelect, {
   RadioSelectProps,
 } from "@/app/_components/ui/radioSelect";
 import brazilBeansImg from "@/public/brazil-cerrado-natural.png";
+import {
+  faGauge,
+  faLayerGroup,
+  faLocationDot,
+  faMountain,
+  faStarOfDavid,
+  faWind,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  InformationCircleIcon,
+  PencilIcon,
+  PlusCircleIcon,
+} from "@heroicons/react/24/outline";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -44,10 +59,24 @@ const radioSelectProps: { [key: string]: RadioSelectProps } = {
     ],
     defaultValue: "100g",
   },
+  grindLevel: {
+    label: "研磨度",
+    groupId: "grindLevel",
+    options: [
+      { label: "原豆", value: "whole-bean" },
+      { label: "濃縮咖啡	", value: "espresso" },
+      { label: "手沖咖啡", value: "hand-drip" },
+      { label: "愛樂壓	", value: "aeropress" },
+      { label: "莫卡壺", value: "moka-pot" },
+      { label: "法式壓濾壺", value: "french-press" },
+    ],
+    defaultValue: "whole-bean",
+  },
 };
 
 interface BeanFormInput {
   weight: string;
+  grindLevel: string;
 }
 
 const BeanPage = () => {
@@ -64,23 +93,87 @@ const BeanPage = () => {
   }, [watch]);
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-8">
-      <div className="flex items-center justify-center">
-        <div className="w-1/2"></div>
-        <div className="w-1/2">
-          <h2 className="mb-8 text-3xl font-semibold">{product.name}</h2>
-          <div className="mb-8 text-xl">HKD 100</div>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <div className="mb-8 flex flex-col gap-3">
-              <RadioSelect
-                {...radioSelectProps["weight"]}
-                formKey="weight"
-                setValue={setValue}
-              />
+    <section className="mx-auto flex max-w-7xl justify-center gap-x-6 px-6 py-8">
+      <div className="w-1/2">
+        <Carousel images={[brazilBeansImg, brazilBeansImg, brazilBeansImg]} />
+      </div>
+      <div className="w-1/2">
+        <h2 className="mb-8 text-3xl font-semibold">{product.name}</h2>
+        <div className="mb-8 text-xl">HKD 100</div>
+        <form onSubmit={(e) => e.preventDefault()} className="mb-8">
+          <div className="mb-8 flex flex-col gap-4">
+            <RadioSelect
+              {...radioSelectProps["weight"]}
+              formKey="weight"
+              setValue={setValue}
+            />
+            <RadioSelect
+              {...radioSelectProps["grindLevel"]}
+              formKey="grindLevel"
+              setValue={setValue}
+            />
+          </div>
+          <button
+            className="flex items-center justify-center gap-1 rounded bg-black px-10 py-2 text-white"
+            onClick={handleSubmit(onSubmit)}
+          >
+            <PlusCircleIcon className="h-4 w-4" />
+            加至購物車
+          </button>
+        </form>
+        <h3 className="mb-3 flex items-center text-2xl font-semibold">
+          <InformationCircleIcon className="mr-1 h-7 w-7" />
+          資訊
+        </h3>
+        <div className="mb-8 grid grid-cols-2 gap-y-3">
+          <div className="flex items-center">
+            <FontAwesomeIcon icon={faLocationDot} className="mr-3 h-5 w-5" />
+            <div>
+              <p className="text-lg font-medium">產地</p>
+              <p>{product.origin}</p>
             </div>
-            <button onClick={handleSubmit(onSubmit)}>加至購物車</button>
-          </form>
+          </div>
+          <div className="flex items-center">
+            <FontAwesomeIcon icon={faMountain} className="mr-3 h-5 w-5" />
+            <div>
+              <p className="text-lg font-medium">生長海拔</p>
+              <p>{product.elevation}</p>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <FontAwesomeIcon icon={faStarOfDavid} className="mr-3 h-5 w-5" />
+            <div>
+              <p className="text-lg font-medium">風味</p>
+              <p>{product.flavourZh}</p>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <FontAwesomeIcon icon={faGauge} className="mr-3 h-5 w-5" />
+            <div>
+              <p className="text-lg font-medium">酸度</p>
+              <p>{product.acidity}</p>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <FontAwesomeIcon icon={faLayerGroup} className="mr-3 h-5 w-5" />
+            <div>
+              <p className="text-lg font-medium">烘焙度</p>
+              <p>{product.roastLevel}</p>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <FontAwesomeIcon icon={faWind} className="mr-3 h-5 w-5" />
+            <div>
+              <p className="text-lg font-medium">處理方法</p>
+              <p>{product.process}</p>
+            </div>
+          </div>
         </div>
+        <h3 className="mb-3 flex items-center text-2xl font-semibold">
+          <PencilIcon className="mr-1 h-7 w-7" />
+          描述
+        </h3>
+        <p className="leading-loose">{product.descriptionZh}</p>
       </div>
     </section>
   );

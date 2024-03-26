@@ -25,8 +25,7 @@ const RadioSelect: React.FC<RadioSelectProps> = (props) => {
     defaultValue = "",
   } = props;
   const [formValue, setFormValue] = useState<string>(defaultValue);
-  const inputClassWithGroupId = `peer/${groupId}`;
-  const labelClassWithGroupId = `peer-checked/${groupId}:bg-leather-500 peer-checked/${groupId}:border-leather-500 peer-checked/${groupId}:font-medium peer-checked/${groupId}:text-white`;
+  const labelClassWithGroupId = `bg-leather-500 border-leather-500 font-medium text-white`;
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValue(e.target.value);
@@ -37,33 +36,35 @@ const RadioSelect: React.FC<RadioSelectProps> = (props) => {
   }, [formKey, formValue, setValue]);
 
   return (
-    <div>
-      <h3 className="mb-1">{label}</h3>
-      <div className="flex items-center gap-4">
-        {options.map(({ label: selectLabel, value }, i) => (
-          <div
-            key={groupId}
-            className="group-hover:border-leather-500 group relative text-center"
-          >
-            <input
-              type="radio"
-              name="weight"
-              id={selectLabel + value}
-              value={value}
-              className={`absolute left-0 top-0 h-full w-full cursor-pointer opacity-0 ${!!groupId && inputClassWithGroupId}`}
-              onChange={handleValueChange}
-              checked={value === formValue}
-            ></input>
-            <label
-              htmlFor={selectLabel + value}
-              className={`group-hover:text-leather-500 inline-block h-full w-full rounded border-2 px-4 py-1 ${!!groupId && labelClassWithGroupId}`}
+    !!groupId && (
+      <div>
+        <h3 className="mb-1 font-medium">{label}:</h3>
+        <div className="flex flex-wrap items-center gap-4">
+          {options.map(({ label: selectLabel, value }, i) => (
+            <div
+              key={`${groupId}-${i}`}
+              className="relative whitespace-nowrap text-center"
             >
-              {selectLabel}
-            </label>
-          </div>
-        ))}
+              <input
+                type="radio"
+                name={`${groupId}`}
+                id={`${groupId}-${value}`}
+                value={value}
+                className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
+                onChange={handleValueChange}
+                checked={value === formValue}
+              ></input>
+              <label
+                htmlFor={`${groupId}-${value}`}
+                className={`inline-block h-full w-full rounded border-2 px-4 py-1  ${value === formValue && labelClassWithGroupId}`}
+              >
+                {selectLabel}
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

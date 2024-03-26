@@ -59,22 +59,22 @@ const Header = () => {
     return () => subscription.unsubscribe();
   }, [dispatch, watch]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
-        const entry = entries[0];
-        setIsShrink(entry.intersectionRatio < 0.95);
-      },
-      {
-        threshold: [0, 1],
-      },
-    );
-    if (scrollTrackerRef.current) observer.observe(scrollTrackerRef.current);
-    return () => {
-      if (scrollTrackerRef.current)
-        observer.unobserve(scrollTrackerRef.current);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries: IntersectionObserverEntry[]) => {
+  //       const entry = entries[0];
+  //       setIsShrink(entry.intersectionRatio < 0.95);
+  //     },
+  //     {
+  //       threshold: [0, 1],
+  //     },
+  //   );
+  //   if (scrollTrackerRef.current) observer.observe(scrollTrackerRef.current);
+  //   return () => {
+  //     if (scrollTrackerRef.current)
+  //       observer.unobserve(scrollTrackerRef.current);
+  //   };
+  // }, []);
 
   return (
     <>
@@ -130,7 +130,7 @@ const Header = () => {
           </div>
         </div>
         <nav>
-          <ul className="bg-leather-500 flex h-full items-center justify-center py-4 text-white">
+          <ul className="flex h-full items-center justify-center bg-leather-500 py-4 text-white">
             <li>
               <Link href="/" className="px-6">
                 {t.header.nav_home}

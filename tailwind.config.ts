@@ -25,6 +25,9 @@ const config: Config = {
           "950": "#2c1d1c",
         },
       },
+      fontSize: {
+        xxs: [".6rem", ".75rem"],
+      },
     },
   },
   plugins: [],

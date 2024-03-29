@@ -1,64 +1,50 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import find from "lodash/find";
-import { useEffect, useRef, useState } from "react";
-import { UseFormSetValue } from "react-hook-form";
+import { useRef, useState } from "react";
+import { useClickAway } from "react-use";
 
 export interface DropdownProps {
   options: {
     label: string;
     value: string;
   }[];
-  // react-hook-form
-  formKey?: string;
-  setValue?: UseFormSetValue<any>;
-  // react-hook-form EOL
   icon?: React.ReactNode;
   type?: "hover" | "click";
   variant?: "standard" | "outline";
-  defaultValue?: string;
   style?: {
     width?: string;
   };
+  // react-hook-form
+  value?: string;
+  onChange?: (value: string) => void;
+  // react-hook-form EOL
 }
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
   const {
     options,
-    formKey,
-    setValue,
     icon,
     type = "hover",
     variant = "standard",
-    defaultValue = "",
     style = {},
+    value,
+    onChange,
   } = props;
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [formValue, setFormValue] = useState<string>(defaultValue);
+  const ref = useRef<HTMLDivElement>(null);
   const [menuVisible, setMenuVisible] = useState(false);
+  const displayLabel = find(options, { value })?.label || "---SELECT ONE---";
+  const showMenu = (menuVisible && type === "click") || type === "hover";
 
-  const displayLabel =
-    find(options, { value: formValue })?.label || "---SELECT ONE---";
-  const showMenuCondition =
-    (menuVisible && type === "click") || type === "hover";
+  useClickAway(ref, () => setMenuVisible(false));
 
-  const handleClickOutside = (e: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node))
-      setMenuVisible(false);
+  const handleSelect = (selectedValue: string) => {
+    if (!!onChange && !!selectedValue) onChange(selectedValue);
+    setMenuVisible(false);
   };
-
-  useEffect(() => {
-    if (type !== "click") return;
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [type]);
-
-  useEffect(() => {
-    if (!!formKey && !!setValue) setValue(formKey, formValue);
-  }, [formKey, formValue, setValue]);
 
   return (
     <div
-      ref={dropdownRef}
+      ref={ref}
       className={`group relative cursor-pointer ${!!style?.width && style.width}`}
     >
       <button
@@ -69,7 +55,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
         {displayLabel}
         <ChevronDownIcon className="h-4 w-4" />
       </button>
-      {showMenuCondition && (
+      {showMenu && (
         <ul
           role="select"
           className={`absolute top-[100%] w-full overflow-hidden rounded bg-white shadow-lg ${type === "hover" ? "hidden group-hover:block" : ""} ${variant === "outline" ? "text-left" : "text-center"}`}
@@ -78,10 +64,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
             <li
               key={option.value}
               className="hover:text-leather-500 px-4 py-2 transition-all hover:font-bold"
-              onClick={() => {
-                setFormValue(option.value);
-                setMenuVisible(false);
-              }}
+              onClick={() => handleSelect(option.value)}
             >
               {option.label}
             </li>

@@ -1,22 +1,21 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Swiper, SwiperClass, SwiperRef, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import Image from "next/image";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 
 interface CarouselProps {
-  images: StaticImport[];
+  imagePaths: string[];
 }
 
 const Carousel: React.FC<CarouselProps> = (props) => {
-  const { images } = props;
+  const { imagePaths } = props;
   const [currImageIndex, setCurrImageIndex] = useState(0);
   const swiperRef = useRef<SwiperClass | null>(null);
-  const maxImageIndex = images.length - 1;
+  const maxImageIndex = imagePaths.length - 1;
 
   const onSwiperRegister = (swiper: SwiperClass) => {
     swiper.on("slideChange", (swiper) => setCurrImageIndex(swiper.activeIndex));
@@ -52,21 +51,34 @@ const Carousel: React.FC<CarouselProps> = (props) => {
     <div className="w-full">
       <div className="group flex">
         <button
+          disabled={currImageIndex === 0}
           onClick={handlePrev}
           className={`opacity-0 transition-opacity group-hover:opacity-100 ${currImageIndex === 0 && "text-slate-300"}`}
         >
           <ChevronLeftIcon className="h-12 w-12" />
         </button>
-        <Swiper onSwiper={onSwiperRegister} slidesPerView={1}>
-          {images.map((im, i) => (
+        <Swiper
+          onSwiper={onSwiperRegister}
+          slidesPerView={1}
+          className="w-full"
+        >
+          {imagePaths.map((im, i) => (
             <SwiperSlide key={i}>
-              <div className="mx-auto max-w-[90%]">
-                <Image src={im} alt="" />
+              <div className="mx-auto w-full">
+                <Image
+                  src={im}
+                  alt=""
+                  className="h-auto w-full"
+                  sizes="100vw"
+                  width="0"
+                  height="0"
+                />
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
         <button
+          disabled={currImageIndex === maxImageIndex}
           onClick={handleNext}
           className={`opacity-0 transition-opacity group-hover:opacity-100 ${currImageIndex === maxImageIndex && "text-slate-300"}`}
         >
@@ -74,13 +86,20 @@ const Carousel: React.FC<CarouselProps> = (props) => {
         </button>
       </div>
       <div className="mx-auto mt-2 flex h-14 w-[90%] cursor-pointer items-center justify-center gap-2">
-        {images.map((im, i) => (
+        {imagePaths.map((im, i) => (
           <div
             key={i}
             className={`h-full overflow-hidden ${currImageIndex === i && "border-4 border-sky-500"}`}
             onClick={() => handleSelect(i)}
           >
-            <Image src={im} alt="" className="h-full w-auto object-contain" />
+            <Image
+              src={im}
+              alt=""
+              className="h-full w-auto"
+              sizes="100vw"
+              width="0"
+              height="0"
+            />
           </div>
         ))}
       </div>

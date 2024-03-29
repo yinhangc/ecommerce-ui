@@ -1,10 +1,11 @@
 "use client";
 
-import Carousel from "@/app/_components/ui/carousel";
-import RadioSelect, {
-  RadioSelectProps,
-} from "@/app/_components/ui/radioSelect";
-import brazilBeansImg from "@/public/brazil-cerrado-natural.png";
+import AddToCartBtn from "@/app/_components/addToCartBtn";
+import Carousel from "@/app/_components/carousel";
+import QtyBtn from "@/app/_components/qtyBtn";
+import RadioSelect, { RadioSelectProps } from "@/app/_components/radioSelect";
+import { useAppDispatch } from "@/app/_redux/hooks";
+import { addToCart } from "@/app/_redux/slices/cart.slice";
 import {
   faGauge,
   faLayerGroup,
@@ -14,13 +15,10 @@ import {
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  InformationCircleIcon,
-  PencilIcon,
-  PlusCircleIcon,
-} from "@heroicons/react/24/outline";
-import { useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { InformationCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
+import find from "lodash/find";
+import { useParams } from "next/navigation";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 const product = {
   id: "brazil-cerrado-natural",
@@ -46,7 +44,8 @@ const product = {
     { size: "100g", price: 80 },
     { size: "200g", price: 130 },
   ],
-  image: brazilBeansImg,
+  imagePath: "/brazil-cerrado-natural.png",
+  // image: brazilBeansImg,
 };
 
 const radioSelectProps: { [key: string]: RadioSelectProps } = {
@@ -57,7 +56,6 @@ const radioSelectProps: { [key: string]: RadioSelectProps } = {
       { label: "100g", value: "100g" },
       { label: "200g", value: "200g" },
     ],
-    defaultValue: "100g",
   },
   grindLevel: {
     label: "研磨度",
@@ -70,56 +68,94 @@ const radioSelectProps: { [key: string]: RadioSelectProps } = {
       { label: "莫卡壺", value: "moka-pot" },
       { label: "法式壓濾壺", value: "french-press" },
     ],
-    defaultValue: "whole-bean",
   },
 };
 
 interface BeanFormInput {
   weight: string;
   grindLevel: string;
+  quantity: number;
 }
 
 const BeanPage = () => {
-  const { setValue, watch, handleSubmit } = useForm<BeanFormInput>();
+  const { control, handleSubmit } = useForm<BeanFormInput>({
+    defaultValues: {
+      weight: "100g",
+      grindLevel: "whole-bean",
+      quantity: 1,
+    },
+  });
+  const dispatch = useAppDispatch();
+  const params = useParams<{ id: string }>();
 
-  const onSubmit: SubmitHandler<BeanFormInput> = (data) =>
-    console.log("submit!", data);
-
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) =>
-      console.log("bean subscription", value),
+  const onSubmit: SubmitHandler<BeanFormInput> = (data) => {
+    const price = find(product.priceList, { size: data.weight })?.price;
+    const weightLabel = find(radioSelectProps.weight.options, {
+      value: data.weight,
+    })?.label;
+    const grindLevelLabel = find(radioSelectProps.grindLevel.options, {
+      value: data.grindLevel,
+    })?.label;
+    if (!price || !weightLabel || !grindLevelLabel) return;
+    const description = `${weightLabel}, ${grindLevelLabel}`;
+    dispatch(
+      addToCart({
+        product: {
+          id: product.id,
+          name: product.name,
+          price,
+          imagePath: product.imagePath,
+          description,
+        },
+        qty: data.quantity,
+      }),
     );
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  };
 
   return (
-    <section className="mx-auto flex max-w-7xl justify-center gap-x-6 px-6 py-8">
+    <section className="mx-auto flex max-w-7xl justify-center gap-x-8 px-6 py-8">
       <div className="w-1/2">
-        <Carousel images={[brazilBeansImg, brazilBeansImg, brazilBeansImg]} />
+        <Carousel imagePaths={["/brazil-cerrado-natural.png"]} />
       </div>
       <div className="w-1/2">
         <h2 className="mb-8 text-3xl font-semibold">{product.name}</h2>
         <div className="mb-8 text-xl">HKD 100</div>
         <form onSubmit={(e) => e.preventDefault()} className="mb-8">
           <div className="mb-8 flex flex-col gap-4">
-            <RadioSelect
-              {...radioSelectProps["weight"]}
-              formKey="weight"
-              setValue={setValue}
+            <Controller
+              control={control}
+              name="weight"
+              render={({ field: { value, onChange } }) => (
+                <RadioSelect
+                  {...radioSelectProps["weight"]}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
             />
-            <RadioSelect
-              {...radioSelectProps["grindLevel"]}
-              formKey="grindLevel"
-              setValue={setValue}
+            <Controller
+              control={control}
+              name="grindLevel"
+              render={({ field: { value, onChange } }) => (
+                <RadioSelect
+                  {...radioSelectProps["grindLevel"]}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
             />
+            <div>
+              <h3 className="mb-1 font-medium">數量:</h3>
+              <Controller
+                control={control}
+                name="quantity"
+                render={({ field: { value, onChange } }) => (
+                  <QtyBtn value={value || 1} onChange={onChange} />
+                )}
+              />
+            </div>
           </div>
-          <button
-            className="flex items-center justify-center gap-1 rounded bg-black px-10 py-2 text-white"
-            onClick={handleSubmit(onSubmit)}
-          >
-            <PlusCircleIcon className="h-4 w-4" />
-            加至購物車
-          </button>
+          <AddToCartBtn handleSubmit={handleSubmit(onSubmit)} />
         </form>
         <h3 className="mb-3 flex items-center text-2xl font-semibold">
           <InformationCircleIcon className="mr-1 h-7 w-7" />

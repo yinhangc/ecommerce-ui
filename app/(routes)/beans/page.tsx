@@ -7,10 +7,10 @@ import {
   Bars3BottomLeftIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import Dropdown, { DropdownProps } from "../../_components/ui/dropdown";
 import Link from "next/link";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import Dropdown, { DropdownProps } from "../../_components/dropdown";
 
 const dropdownProps: { [key: string]: DropdownProps } = {
   roastLevel: {
@@ -21,7 +21,6 @@ const dropdownProps: { [key: string]: DropdownProps } = {
       { label: "中深焙", value: "medium-dark" },
       { label: "深焙", value: "dark" },
     ],
-    defaultValue: "all",
     variant: "outline",
     type: "click",
     style: {
@@ -34,7 +33,6 @@ const dropdownProps: { [key: string]: DropdownProps } = {
       { label: "混合", value: "blend" },
       { label: "單一品種", value: "single-origin" },
     ],
-    defaultValue: "all",
     variant: "outline",
     type: "click",
     style: {
@@ -50,7 +48,6 @@ const dropdownProps: { [key: string]: DropdownProps } = {
       { label: "日期, 從舊至新", value: "date-oldest-to-newest" },
       { label: "日期, 從新至舊", value: "date-newest-to-oldest" },
     ],
-    defaultValue: "alphabetical-a-z",
     variant: "outline",
     type: "click",
     style: {
@@ -277,7 +274,13 @@ interface BeansFormInput {
 }
 
 const BeansPage = () => {
-  const { setValue, watch } = useForm<BeansFormInput>();
+  const { control, watch } = useForm<BeansFormInput>({
+    defaultValues: {
+      roastLevel: "all",
+      origin: "all",
+      sortBy: "alphabetical-a-z",
+    },
+  });
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) =>
@@ -299,15 +302,27 @@ const BeansPage = () => {
             <AdjustmentsHorizontalIcon className="h-6 w-6" />
             <span className="min-w-[35px]">選擇:</span>
           </div>
-          <Dropdown
-            {...dropdownProps["roastLevel"]}
-            formKey="roastLevel"
-            setValue={setValue}
+          <Controller
+            control={control}
+            name="roastLevel"
+            render={({ field: { value, onChange } }) => (
+              <Dropdown
+                {...dropdownProps["roastLevel"]}
+                value={value}
+                onChange={onChange}
+              />
+            )}
           />
-          <Dropdown
-            {...dropdownProps["origin"]}
-            formKey="origin"
-            setValue={setValue}
+          <Controller
+            control={control}
+            name="origin"
+            render={({ field: { value, onChange } }) => (
+              <Dropdown
+                {...dropdownProps["origin"]}
+                value={value}
+                onChange={onChange}
+              />
+            )}
           />
         </div>
         <div className="flex w-full items-center justify-end gap-3">
@@ -315,10 +330,16 @@ const BeansPage = () => {
             <Bars3BottomLeftIcon className="h-6 w-6" />
             <span className="min-w-[40px]">排序:</span>
           </div>
-          <Dropdown
-            {...dropdownProps["sortBy"]}
-            formKey="sortBy"
-            setValue={setValue}
+          <Controller
+            control={control}
+            name="sortBy"
+            render={({ field: { value, onChange } }) => (
+              <Dropdown
+                {...dropdownProps["sortBy"]}
+                value={value}
+                onChange={onChange}
+              />
+            )}
           />
         </div>
       </form>

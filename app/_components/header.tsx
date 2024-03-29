@@ -10,14 +10,15 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../_redux/hooks";
 import {
   Language,
   selectTranslations,
   setLanguage,
 } from "../_redux/slices/i18n.slice";
-import Dropdown, { DropdownProps } from "./ui/dropdown";
+import { SidebarType, showSidebar } from "../_redux/slices/ui.slice";
+import Dropdown, { DropdownProps } from "./dropdown";
 
 const dropdownProps: { [key: string]: DropdownProps } = {
   language: {
@@ -26,7 +27,6 @@ const dropdownProps: { [key: string]: DropdownProps } = {
       { label: "繁體中文", value: "zh" },
       { label: "English", value: "en" },
     ],
-    defaultValue: "zh",
   },
   currency: {
     icon: <CurrencyDollarIcon className="h-7 w-7" />,
@@ -34,7 +34,6 @@ const dropdownProps: { [key: string]: DropdownProps } = {
       { label: "HKD", value: "hkd" },
       { label: "TWD", value: "twd" },
     ],
-    defaultValue: "hkd",
   },
 };
 
@@ -44,11 +43,17 @@ interface HeaderFormInput {
 }
 
 const Header = () => {
-  const t = useAppSelector(selectTranslations);
   const dispatch = useAppDispatch();
+  const t = useAppSelector(selectTranslations);
+  const cartItemsLength = useAppSelector((state) => state.cart.items).length;
   const scrollTrackerRef = useRef<HTMLDivElement>(null);
   const [isShrink, setIsShrink] = useState(false);
-  const { setValue, watch } = useForm<HeaderFormInput>();
+  const { control, watch } = useForm<HeaderFormInput>({
+    defaultValues: {
+      language: "zh",
+      currency: "hkd",
+    },
+  });
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
@@ -59,23 +64,24 @@ const Header = () => {
     return () => subscription.unsubscribe();
   }, [dispatch, watch]);
 
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     (entries: IntersectionObserverEntry[]) => {
-  //       const entry = entries[0];
-  //       setIsShrink(entry.intersectionRatio < 0.95);
-  //     },
-  //     {
-  //       threshold: [0, 1],
-  //     },
-  //   );
-  //   if (scrollTrackerRef.current) observer.observe(scrollTrackerRef.current);
-  //   return () => {
-  //     if (scrollTrackerRef.current)
-  //       observer.unobserve(scrollTrackerRef.current);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]) => {
+        const entry = entries[0];
+        setIsShrink(entry.intersectionRatio < 0.95);
+      },
+      {
+        threshold: [0, 1],
+      },
+    );
+    if (scrollTrackerRef.current) observer.observe(scrollTrackerRef.current);
+    return () => {
+      if (scrollTrackerRef.current)
+        observer.unobserve(scrollTrackerRef.current);
+    };
+  }, []);
 
+  const handleCartBtnClick = () => dispatch(showSidebar(SidebarType.Cart));
   return (
     <>
       <div
@@ -83,33 +89,46 @@ const Header = () => {
         className="pointer-events-none absolute top-2 z-20 h-6 w-6 opacity-0"
       ></div>
       <header
-        className={`sticky top-0 z-10 flex w-full flex-col bg-white transition-all duration-300`}
+        className={`sticky top-0 z-10 flex h-[300px] w-full flex-col bg-transparent transition-all duration-300`}
       >
         <div
-          className={`mx-auto flex w-full max-w-7xl items-center px-6 ${isShrink ? "py-0" : "py-4"}`}
+          className={`mx-auto flex w-full max-w-7xl items-center bg-white px-6`}
         >
           <div className="flex basis-2/6 items-center gap-4">
-            <Dropdown
-              {...dropdownProps.language}
-              formKey="language"
-              setValue={setValue}
+            <Controller
+              control={control}
+              name="language"
+              render={({ field: { value, onChange } }) => (
+                <Dropdown
+                  {...dropdownProps["language"]}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
             />
-            <Dropdown
-              {...dropdownProps.currency}
-              formKey="currency"
-              setValue={setValue}
+            <Controller
+              control={control}
+              name="currency"
+              render={({ field: { value, onChange } }) => (
+                <Dropdown
+                  {...dropdownProps["currency"]}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
             />
           </div>
           <div
-            className={`basis-2/6 transition-all duration-500 ${isShrink ? "h-[140px]" : "h-[200px]"}`}
+            className={`basis-2/6 transition-all duration-200 ease-in-out ${isShrink ? "h-[125px]" : "h-[200px]"} `}
           >
             <Image
               src={logo}
               alt="Logo"
+              className="h-full w-auto"
+              sizes="100vw"
+              width="0"
+              height="0"
               style={{
-                display: "block",
-                height: "100%",
-                width: "auto",
                 margin: "auto",
               }}
             />
@@ -121,16 +140,24 @@ const Header = () => {
                 {t.header.nav_login}
               </Link>
             </button>
-            <button>
-              <Link href="/cart" className="flex items-center gap-1">
+            <button
+              className="flex items-center gap-1"
+              onClick={handleCartBtnClick}
+            >
+              <div className="relative">
+                {cartItemsLength > 0 && (
+                  <div className="absolute -right-2 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-medium text-white">
+                    {cartItemsLength}
+                  </div>
+                )}
                 <ShoppingCartIcon className="h-7 w-7" />
-                {t.header.nav_cart}
-              </Link>
+              </div>
+              {t.header.nav_cart}
             </button>
           </div>
         </div>
         <nav>
-          <ul className="flex h-full items-center justify-center bg-leather-500 py-4 text-white">
+          <ul className="bg-leather-500 flex h-full items-center justify-center py-4 text-white">
             <li>
               <Link href="/" className="px-6">
                 {t.header.nav_home}

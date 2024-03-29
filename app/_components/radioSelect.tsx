@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { UseFormSetValue } from "react-hook-form";
+import React from "react";
 
 export interface RadioSelectProps {
   label: string;
@@ -9,38 +8,26 @@ export interface RadioSelectProps {
     value: string;
   }[];
   // react-hook-form
-  formKey?: string;
-  setValue?: UseFormSetValue<any>;
+  value?: string;
+  onChange?: (value: string) => void;
   // react-hook-form EOL
-  defaultValue?: string;
 }
 
 const RadioSelect: React.FC<RadioSelectProps> = (props) => {
-  const {
-    label,
-    groupId = "",
-    options,
-    formKey,
-    setValue,
-    defaultValue = "",
-  } = props;
-  const [formValue, setFormValue] = useState<string>(defaultValue);
+  const { label, groupId = "", options, value, onChange } = props;
   const labelClassWithGroupId = `bg-leather-500 border-leather-500 font-medium text-white`;
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValue(e.target.value);
+    if (!onChange) return;
+    onChange(e.target.value);
   };
-
-  useEffect(() => {
-    if (!!formKey && !!setValue) setValue(formKey, formValue);
-  }, [formKey, formValue, setValue]);
 
   return (
     !!groupId && (
       <div>
         <h3 className="mb-1 font-medium">{label}:</h3>
         <div className="flex flex-wrap items-center gap-4">
-          {options.map(({ label: selectLabel, value }, i) => (
+          {options.map(({ label: selectLabel, value: selectValue }, i) => (
             <div
               key={`${groupId}-${i}`}
               className="relative whitespace-nowrap text-center"
@@ -49,14 +36,14 @@ const RadioSelect: React.FC<RadioSelectProps> = (props) => {
                 type="radio"
                 name={`${groupId}`}
                 id={`${groupId}-${value}`}
-                value={value}
+                value={selectValue}
                 className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
                 onChange={handleValueChange}
-                checked={value === formValue}
+                checked={value === selectValue}
               ></input>
               <label
                 htmlFor={`${groupId}-${value}`}
-                className={`inline-block h-full w-full rounded border-2 px-4 py-1  ${value === formValue && labelClassWithGroupId}`}
+                className={`inline-block h-full w-full rounded border-2 px-4 py-1  ${value === selectValue && labelClassWithGroupId}`}
               >
                 {selectLabel}
               </label>

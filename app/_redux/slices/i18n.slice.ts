@@ -3,7 +3,7 @@ import { RootState } from "../store";
 
 export type Language = "zh" | "en";
 
-export interface I18nState {
+interface I18nState {
   language: Language;
   translations: {
     zh: any;

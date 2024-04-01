@@ -86,7 +86,7 @@ const BeanPage = () => {
     },
   });
   const dispatch = useAppDispatch();
-  const params = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>();
 
   const onSubmit: SubmitHandler<BeanFormInput> = (data) => {
     const price = find(product.priceList, { size: data.weight })?.price;

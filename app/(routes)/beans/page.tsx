@@ -67,7 +67,7 @@ const productsData = [
   // https://perkcoffee.co/hk-en/product/brazil-cerrado/#/?attribute_pa_preparation=wholebean&attribute_pa_brew-method=none&attribute_pa_size=250g-bag
   // https://giraffecoffee.co/brazil-cerrado/
   {
-    id: "brazil-cerrado-natural",
+    id: "1",
     name: "Brazil Cerrado Natural 巴西🇧🇷 喜拉朵日曬",
     origin: "Cerrado, Brazil",
     elevation: "1000-1200m",
@@ -94,7 +94,7 @@ const productsData = [
   },
   // https://sucafina.com/na/offerings/santos-natural
   {
-    id: "brazil-santos",
+    id: "2",
     name: "Brazil Santos 巴西🇧🇷 桑托斯",
     origin: "São Paulo, Brazil",
     elevation: "800-1300m",
@@ -116,7 +116,7 @@ const productsData = [
     image: brazilSantosImg,
   },
   {
-    id: "brazil-obata",
+    id: "3",
     name: "Brazil Obata 巴西🇧🇷 歐巴塔",
     origin: "Minas Gerias, Brazil",
     elevation: "1000-1100m",
@@ -135,7 +135,7 @@ const productsData = [
   },
   // https://www.roastmasters.com/medellinx.html
   {
-    id: "colombia-medellin-supremo",
+    id: "4",
     name: "Colombia Medellin Supremo 哥倫比亞🇨🇴 梅德琳",
     origin: "Medellin, Colombia",
     elevation: "1600-1850m",
@@ -162,7 +162,7 @@ const productsData = [
   },
   // https://www.delafincacoffee.com/blog/bean-basics-intro-to-the-caturra-varietal
   {
-    id: "colombia-caturra",
+    id: "5",
     name: "Colombia Caturra 哥倫比亞🇨🇴 卡杜拉",
     origin: "Caldas, Colombia",
     elevation: "1400-1800m",
@@ -185,7 +185,7 @@ const productsData = [
   },
   // https://www.mistobox.com/colombia-el-obraje
   {
-    id: "colombia-el-obraje",
+    id: "6",
     name: "Colombia El Obraje 哥倫比亞🇨🇴 奧博拉",
     origin: "Nariño, Colombia",
     elevation: "1900m",
@@ -204,7 +204,7 @@ const productsData = [
   },
   // https://www.footprintcoffee.co.uk/product/colombia-monte-bonito/
   {
-    id: "colombia-monte-bonito",
+    id: "7",
     name: "Colombia Monte Bonito 哥倫比亞🇨🇴 博尼託山",
     origin: "Monte Bonito, Colombia",
     elevation: "1700m",
@@ -231,7 +231,7 @@ const productsData = [
   },
   // https://coffeeroasters.com.hk/products/yunnan-kongque-washed-coffee
   {
-    id: "yunnan-kongque",
+    id: "8",
     name: "Yunnan KongQue 雲南🇨🇳 孔雀",
     origin: "Yunnan, China",
     elevation: "1400-1600m",
@@ -251,7 +251,7 @@ const productsData = [
   // https://www.avidcoffeehk.com/products/%E9%9B%B2%E5%8D%97-%E7%93%8A%E7%91%A4%E6%BC%BF%E8%9C%9C%E8%99%95%E7%90%86-yunnan-honey-process-%E6%96%B0%E9%AE%AE%E7%83%98%E7%84%99%E5%92%96%E5%95%A1%E8%B1%86-%E8%90%BD%E5%96%AE%E5%8D%B3%E7%83%98-68-100g-108-200g
   // https://www.kopicoffeeco.com/products/yunnanhoney
   {
-    id: "yunnan-honey-processed",
+    id: "9",
     name: "Yunnan Honey Process 雲南🇨🇳 瓊瑤漿蜜處理",
     origin: "Yunnan",
     elevation: "1400m",

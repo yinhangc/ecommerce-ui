@@ -9,15 +9,14 @@ import { ShoppingCartIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { find } from "lodash";
 import Image from "next/image";
 import React, { useCallback, useEffect, useRef } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 import { useClickAway } from "react-use";
 import QtyBtn from "../qtyBtn";
 import { SidebarInterface } from "./sidebars";
+import Link from "next/link";
 
 const CartSidebar: React.FC<SidebarInterface> = (props) => {
-  const { watch, control } = useForm<{
-    [key: string]: number;
-  }>();
+  const { watch, control } = useForm<FieldValues>();
   const { show } = props;
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -27,7 +26,7 @@ const CartSidebar: React.FC<SidebarInterface> = (props) => {
     dispatch(hideSidebar());
   });
 
-  const getTotalPrice = () => {
+  const getProductsPrice = () => {
     let price = 0;
     for (const item of items) {
       price += item.product.price * item.qty;
@@ -46,6 +45,8 @@ const CartSidebar: React.FC<SidebarInterface> = (props) => {
   );
 
   const handleRemove = (id: string) => dispatch(removeFromCart(id));
+
+  const handleCheckoutBtnClick = () => dispatch(hideSidebar());
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
@@ -104,11 +105,19 @@ const CartSidebar: React.FC<SidebarInterface> = (props) => {
           ))}
           <div className="flex w-full justify-end gap-2 font-bold">
             <p>總計:</p>
-            <p>${getTotalPrice()}</p>
+            <p>${getProductsPrice()}</p>
           </div>
-          <button className="flex items-center justify-center gap-1 rounded bg-black px-10 py-2 text-white">
-            <ShoppingCartIcon className="h-4 w-4" />
-            Checkout
+          <button
+            className="rounded bg-black text-white"
+            onClick={handleCheckoutBtnClick}
+          >
+            <Link
+              href="/checkout"
+              className="flex items-center gap-1 px-10 py-2"
+            >
+              <ShoppingCartIcon className="h-4 w-4" />
+              Checkout
+            </Link>
           </button>
         </div>
       )}

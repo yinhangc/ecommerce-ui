@@ -89,11 +89,9 @@ const Header = () => {
         className="pointer-events-none absolute top-2 z-20 h-6 w-6 opacity-0"
       ></div>
       <header
-        className={`sticky top-0 z-10 flex h-[300px] w-full flex-col bg-transparent transition-all duration-300`}
+        className={`pointer-events-none sticky top-0 z-20 flex h-[256px] w-full flex-col overflow-hidden bg-transparent transition-all duration-300`}
       >
-        <div
-          className={`mx-auto flex w-full max-w-7xl items-center bg-white px-6`}
-        >
+        <div className="pointer-events-auto mx-auto flex w-full max-w-7xl items-center bg-white px-6">
           <div className="flex basis-2/6 items-center gap-4">
             <Controller
               control={control}
@@ -156,8 +154,8 @@ const Header = () => {
             </button>
           </div>
         </div>
-        <nav>
-          <ul className="bg-leather-500 flex h-full items-center justify-center py-4 text-white">
+        <nav className="pointer-events-auto">
+          <ul className="flex h-full items-center justify-center bg-leather-500 py-4 text-white">
             <li>
               <Link href="/" className="px-6">
                 {t.header.nav_home}

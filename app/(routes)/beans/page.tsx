@@ -1,7 +1,14 @@
 "use client";
 
-import brazilBeansImg from "@/public/brazil-cerrado-natural.png";
-import colombiaBeansImg from "@/public/colombia-medellin-supremo.png";
+import brazilCerradoNaturalImg from "@/public/beans/brazil-cerrado-natural.png";
+import brazilObataImg from "@/public/beans/brazil-obata.png";
+import brazilSantosImg from "@/public/beans/brazil-santos.png";
+import colombiaCaturraImg from "@/public/beans/colombia-caturra.png";
+import colombiaElObrajeImg from "@/public/beans/colombia-el-obraje.png";
+import colombiaMedellinSupremoImg from "@/public/beans/colombia-medellin-supremo.png";
+import colombiaMonteBonitoImg from "@/public/beans/colombia-monte-bonito.png";
+import yunnanHoneyProcessedImg from "@/public/beans/yunnan-honey-process.png";
+import yunnanKongQueImg from "@/public/beans/yunnan-kong-que.png";
 import {
   AdjustmentsHorizontalIcon,
   Bars3BottomLeftIcon,
@@ -83,7 +90,7 @@ const productsData = [
       { size: "100g", price: 80 },
       { size: "200g", price: 130 },
     ],
-    image: brazilBeansImg,
+    image: brazilCerradoNaturalImg,
   },
   // https://sucafina.com/na/offerings/santos-natural
   {
@@ -106,11 +113,11 @@ const productsData = [
       { size: "100g", price: 90 },
       { size: "200g", price: 150 },
     ],
-    image: brazilBeansImg,
+    image: brazilSantosImg,
   },
   {
     id: "brazil-obata",
-    name: "Brazil Santos 巴西🇧🇷 歐巴塔",
+    name: "Brazil Obata 巴西🇧🇷 歐巴塔",
     origin: "Minas Gerias, Brazil",
     elevation: "1000-1100m",
     flavourEn: "Berry jam, Plum wine, Raisins, Tropical fruits",
@@ -124,7 +131,7 @@ const productsData = [
       { size: "100g", price: 80 },
       { size: "200g", price: 130 },
     ],
-    image: brazilBeansImg,
+    image: brazilObataImg,
   },
   // https://www.roastmasters.com/medellinx.html
   {
@@ -151,7 +158,7 @@ const productsData = [
       { size: "100g", price: 70 },
       { size: "200g", price: 120 },
     ],
-    image: colombiaBeansImg,
+    image: colombiaMedellinSupremoImg,
   },
   // https://www.delafincacoffee.com/blog/bean-basics-intro-to-the-caturra-varietal
   {
@@ -174,7 +181,7 @@ const productsData = [
       { size: "100g", price: 90 },
       { size: "200g", price: 150 },
     ],
-    image: colombiaBeansImg,
+    image: colombiaCaturraImg,
   },
   // https://www.mistobox.com/colombia-el-obraje
   {
@@ -193,7 +200,7 @@ const productsData = [
       { size: "100g", price: 125 },
       { size: "200g", price: 230 },
     ],
-    image: colombiaBeansImg,
+    image: colombiaElObrajeImg,
   },
   // https://www.footprintcoffee.co.uk/product/colombia-monte-bonito/
   {
@@ -220,7 +227,7 @@ const productsData = [
       { size: "100g", price: 80 },
       { size: "200g", price: 130 },
     ],
-    image: colombiaBeansImg,
+    image: colombiaMonteBonitoImg,
   },
   // https://coffeeroasters.com.hk/products/yunnan-kongque-washed-coffee
   {
@@ -239,13 +246,13 @@ const productsData = [
       { size: "100g", price: 70 },
       { size: "200g", price: 120 },
     ],
-    image: colombiaBeansImg,
+    image: yunnanKongQueImg,
   },
   // https://www.avidcoffeehk.com/products/%E9%9B%B2%E5%8D%97-%E7%93%8A%E7%91%A4%E6%BC%BF%E8%9C%9C%E8%99%95%E7%90%86-yunnan-honey-process-%E6%96%B0%E9%AE%AE%E7%83%98%E7%84%99%E5%92%96%E5%95%A1%E8%B1%86-%E8%90%BD%E5%96%AE%E5%8D%B3%E7%83%98-68-100g-108-200g
   // https://www.kopicoffeeco.com/products/yunnanhoney
   {
     id: "yunnan-honey-processed",
-    name: "Yunnan Honey Process 雲南🇨🇳 ...",
+    name: "Yunnan Honey Process 雲南🇨🇳 瓊瑤漿蜜處理",
     origin: "Yunnan",
     elevation: "1400m",
     flavourEn: "Red wine, Fruity Syrup, Passion Fruit, Berries",
@@ -263,7 +270,7 @@ const productsData = [
       { size: "100g", price: 70 },
       { size: "200g", price: 120 },
     ],
-    image: colombiaBeansImg,
+    image: yunnanHoneyProcessedImg,
   },
 ];
 

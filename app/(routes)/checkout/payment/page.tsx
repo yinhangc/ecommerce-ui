@@ -1,5 +1,6 @@
 "use client";
 
+import Payment from "@/app/_components/payment";
 import Stepper from "@/app/_components/stepper";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
@@ -78,7 +79,8 @@ const CheckoutPaymentPage = () => {
       >
         <div className="w-full">
           <h3 className="mb-4 text-2xl">付款</h3>
-          <p className="leading-7">
+          <Payment />
+          {/* <p className="leading-7">
             感謝您選擇我們的產品！請確定你的訂單詳情，並點擊下方「繼續」按鈕以繼續付款。您將被重新導向到安全結帳頁面，以完成交易。請確保您的付款資訊準確無誤，並確保網路連線穩定。如果您遇到任何問題或有任何疑問，請隨時聯絡我們的客戶服務部。謝謝！
           </p>
           <div className="mt-12 flex gap-x-10">
@@ -96,7 +98,7 @@ const CheckoutPaymentPage = () => {
               繼續
               <ChevronRightIcon className="h-5 w-5" />
             </button>
-          </div>
+          </div> */}
         </div>
         <div className="w-full">
           <h3 className="mb-4 text-2xl">訂單詳情</h3>

@@ -1,2 +1,0 @@
-- React hook form
-    - https://dev.to/elyngved/turn-anything-into-a-form-field-with-react-hook-form-controller-42c

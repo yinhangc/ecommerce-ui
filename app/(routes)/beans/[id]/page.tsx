@@ -44,8 +44,7 @@ const product = {
     { size: "100g", price: 80 },
     { size: "200g", price: 130 },
   ],
-  imagePath: "/brazil-cerrado-natural.png",
-  // image: brazilBeansImg,
+  imagePath: "/beans/brazil-cerrado-natural.png",
 };
 
 const radioSelectProps: { [key: string]: RadioSelectProps } = {
@@ -115,7 +114,7 @@ const BeanPage = () => {
   return (
     <section className="mx-auto flex max-w-7xl justify-center gap-x-8 px-6 py-8">
       <div className="w-1/2">
-        <Carousel imagePaths={["/brazil-cerrado-natural.png"]} />
+        <Carousel imagePaths={["/beans/brazil-cerrado-natural.png"]} />
       </div>
       <div className="w-1/2">
         <h2 className="mb-8 text-3xl font-semibold">{product.name}</h2>

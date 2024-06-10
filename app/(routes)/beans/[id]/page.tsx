@@ -1,11 +1,11 @@
 "use client";
 
-import AddToCartBtn from "@/app/_components/addToCartBtn";
-import Carousel from "@/app/_components/carousel";
-import QtyBtn from "@/app/_components/qtyBtn";
-import RadioSelect, { RadioSelectProps } from "@/app/_components/radioSelect";
-import { useAppDispatch } from "@/app/_redux/hooks";
-import { addToCart } from "@/app/_redux/slices/cart.slice";
+import { useAppDispatch } from "@/redux/hooks";
+import { addToCart } from "@/redux/slices/cart.slice";
+import AddToCartBtn from "@/components/addToCartBtn";
+import Carousel from "@/components/carousel";
+import QtyBtn from "@/components/qtyBtn";
+import RadioSelect, { RadioSelectProps } from "@/components/radioSelect";
 import {
   faGauge,
   faLayerGroup,

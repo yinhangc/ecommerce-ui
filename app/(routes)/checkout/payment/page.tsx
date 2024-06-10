@@ -1,13 +1,12 @@
 "use client";
 
-import Payment from "@/app/_components/payment";
-import Stepper from "@/app/_components/stepper";
-import { useAppSelector } from "@/app/_redux/hooks";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import Payment from "@/components/payment";
+import Stepper from "@/components/stepper";
+import { useAppSelector } from "@/redux/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const requiredError = "請填寫此欄位";

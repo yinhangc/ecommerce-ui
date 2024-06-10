@@ -1,7 +1,7 @@
 "use client";
 
-import { useAppSelector } from "@/app/_redux/hooks";
-import { SidebarType } from "@/app/_redux/slices/ui.slice";
+import { useAppSelector } from "@/redux/hooks";
+import { SidebarType } from "@/redux/slices/ui.slice";
 import CartSidebar from "./cartSidebar";
 
 export interface SidebarInterface {

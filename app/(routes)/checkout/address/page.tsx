@@ -1,9 +1,9 @@
 "use client";
 
-import FormDropdown from "@/app/_components/form/formDropdown";
-import FormInputField from "@/app/_components/form/formInputField";
-import FormRadioSelect from "@/app/_components/form/formRadioSelect";
-import Stepper from "@/app/_components/stepper";
+import FormDropdown from "@/components/form/formDropdown";
+import FormInputField from "@/components/form/formInputField";
+import FormRadioSelect from "@/components/form/formRadioSelect";
+import Stepper from "@/components/stepper";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

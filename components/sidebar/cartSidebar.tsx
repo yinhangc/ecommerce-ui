@@ -1,10 +1,10 @@
-import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   decreaseQuantity,
   increaseQuantity,
   removeFromCart,
-} from "@/app/_redux/slices/cart.slice";
-import { hideSidebar } from "@/app/_redux/slices/ui.slice";
+} from "@/redux/slices/cart.slice";
+import { hideSidebar } from "@/redux/slices/ui.slice";
 import { ShoppingCartIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { find } from "lodash";
 import Image from "next/image";

@@ -11,13 +11,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../_redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   Language,
   selectTranslations,
   setLanguage,
-} from "../_redux/slices/i18n.slice";
-import { SidebarType, showSidebar } from "../_redux/slices/ui.slice";
+} from "../redux/slices/i18n.slice";
+import { SidebarType, showSidebar } from "../redux/slices/ui.slice";
 import Dropdown, { DropdownProps } from "./dropdown";
 
 const dropdownProps: { [key: string]: DropdownProps } = {

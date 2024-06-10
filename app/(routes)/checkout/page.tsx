@@ -1,7 +1,7 @@
 "use client";
 
-import FormInputField from "@/app/_components/form/formInputField";
-import Stepper from "@/app/_components/stepper";
+import FormInputField from "@/components/form/formInputField";
+import Stepper from "@/components/stepper";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

@@ -1,5 +1,6 @@
 "use client";
 
+import Dropdown, { DropdownProps } from "@/components/dropdown";
 import brazilCerradoNaturalImg from "@/public/beans/brazil-cerrado-natural.png";
 import brazilObataImg from "@/public/beans/brazil-obata.png";
 import brazilSantosImg from "@/public/beans/brazil-santos.png";
@@ -17,7 +18,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import Dropdown, { DropdownProps } from "../../_components/dropdown";
 
 const dropdownProps: { [key: string]: DropdownProps } = {
   roastLevel: {

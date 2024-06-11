@@ -1,29 +1,27 @@
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import {
-  decreaseQuantity,
-  increaseQuantity,
-  removeFromCart,
-} from "@/redux/slices/cart.slice";
-import { hideSidebar } from "@/redux/slices/ui.slice";
 import { ShoppingCartIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { find } from "lodash";
 import Image from "next/image";
-import React, { useCallback, useEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { useClickAway } from "react-use";
 import QtyBtn from "../qtyBtn";
-import { SidebarInterface } from "./sidebars";
-import Link from "next/link";
 
-const CartSidebar: React.FC<SidebarInterface> = (props) => {
+const CartSidebar: React.FC = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [show, setShow] = useState(false);
   const { watch, control } = useForm<FieldValues>();
-  const { show } = props;
   const ref = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
-  const items = useAppSelector((state) => state.cart.items);
+  // TODO: Cart items
+  // const dispatch = useAppDispatch();
+  // const items = useAppSelector((state) => state.cart.items);
+  const items: any[] = [];
 
   useClickAway(ref, () => {
-    dispatch(hideSidebar());
+    // animate hide sidebar
+    setShow(false);
+    setTimeout(() => router.replace(pathname), 300);
   });
 
   const getProductsPrice = () => {
@@ -36,17 +34,25 @@ const CartSidebar: React.FC<SidebarInterface> = (props) => {
 
   const handleChange = useCallback(
     (name: string, updatedQty: number | undefined) => {
-      const existingQty = find(items, (el) => el.product.id === name)?.qty;
-      if (!existingQty || !updatedQty) return;
-      if (updatedQty > existingQty) dispatch(increaseQuantity(name));
-      else if (updatedQty < existingQty) dispatch(decreaseQuantity(name));
+      // TODO: Cart handleChange
+      // const existingQty = find(items, (el) => el.product.id === name)?.qty;
+      // if (!existingQty || !updatedQty) return;
+      // if (updatedQty > existingQty) dispatch(increaseQuantity(name));
+      // else if (updatedQty < existingQty) dispatch(decreaseQuantity(name));
     },
-    [dispatch, items],
+    // [dispatch, items],
+    [items],
   );
 
-  const handleRemove = (id: string) => dispatch(removeFromCart(id));
+  const handleRemove = (id: string) => {
+    // TODO: Cart handleRemove
+    // dispatch(removeFromCart(id));
+  };
 
-  const handleCheckoutBtnClick = () => dispatch(hideSidebar());
+  const handleCheckoutBtnClick = () => {
+    // TODO: Cart handleCheckoutBtnClick
+    // dispatch(hideSidebar());
+  };
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
@@ -56,6 +62,9 @@ const CartSidebar: React.FC<SidebarInterface> = (props) => {
     });
     return () => subscription.unsubscribe();
   }, [handleChange, watch]);
+
+  // animate show sidebar on init render
+  useEffect(() => setShow(true), []);
 
   return (
     <div

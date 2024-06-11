@@ -1,6 +1,8 @@
 "use client";
 
 import logo from "@/public/logo.png";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { SidebarType, showSidebar } from "@/redux/slices/ui.slice";
 import {
   CurrencyDollarIcon,
   GlobeAltIcon,
@@ -11,13 +13,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   Language,
   selectTranslations,
   setLanguage,
 } from "../redux/slices/i18n.slice";
-import { SidebarType, showSidebar } from "../redux/slices/ui.slice";
 import Dropdown, { DropdownProps } from "./dropdown";
 
 const dropdownProps: { [key: string]: DropdownProps } = {
@@ -43,9 +43,11 @@ interface HeaderFormInput {
 }
 
 const Header = () => {
-  const dispatch = useAppDispatch();
-  const t = useAppSelector(selectTranslations);
-  const cartItemsLength = useAppSelector((state) => state.cart.items).length;
+  // const dispatch = useAppDispatch();
+  // const t = useAppSelector(selectTranslations);
+  // TODO: cartItemsLength
+  // const cartItemsLength = useAppSelector((state) => state.cart.items).length;
+  const cartItemsLength = 0;
   const scrollTrackerRef = useRef<HTMLDivElement>(null);
   const [isShrink, setIsShrink] = useState(false);
   const { control, watch } = useForm<HeaderFormInput>({
@@ -59,10 +61,11 @@ const Header = () => {
     const subscription = watch((value, { name, type }) => {
       console.log("header subscription", value);
       const { language, currency } = value;
-      dispatch(setLanguage(language as Language));
+      // TODO: setLanguage
+      // dispatch(setLanguage(language as Language));
     });
     return () => subscription.unsubscribe();
-  }, [dispatch, watch]);
+  }, [watch]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -81,7 +84,6 @@ const Header = () => {
     };
   }, []);
 
-  const handleCartBtnClick = () => dispatch(showSidebar(SidebarType.Cart));
   return (
     <>
       <div
@@ -132,43 +134,42 @@ const Header = () => {
             />
           </div>
           <div className="flex basis-2/6 items-center justify-end gap-5">
-            <button>
-              <Link href="/login" className="flex items-center gap-1">
-                <UserIcon className="h-7 w-7" />
-                {t.header.nav_login}
-              </Link>
-            </button>
-            <button
-              className="flex items-center gap-1"
-              onClick={handleCartBtnClick}
+            <Link href="/login" className="flex items-center gap-1">
+              <UserIcon className="h-7 w-7" />
+              {/* {t.header.nav_login} */}
+              登入
+            </Link>
+            <Link
+              href="?cartSidebar=true"
+              className="relative flex items-center gap-1"
             >
-              <div className="relative">
-                {cartItemsLength > 0 && (
-                  <div className="absolute -right-2 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-medium text-white">
-                    {cartItemsLength}
-                  </div>
-                )}
-                <ShoppingCartIcon className="h-7 w-7" />
-              </div>
-              {t.header.nav_cart}
-            </button>
+              <span className="absolute -right-4 -top-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-medium text-white">
+                {cartItemsLength}
+              </span>
+              <ShoppingCartIcon className="h-7 w-7" />
+              {/* {t.header.nav_cart} */}
+              購物車
+            </Link>
           </div>
         </div>
         <nav className="pointer-events-auto">
           <ul className="flex h-full items-center justify-center bg-leather-500 py-4 text-white">
             <li>
               <Link href="/" className="px-6">
-                {t.header.nav_home}
+                {/* {t.header.nav_home} */}
+                主頁
               </Link>
             </li>
             <li>
               <Link href="/beans" className="px-6">
-                {t.header.nav_beans}
+                {/* {t.header.nav_beans} */}
+                咖啡豆
               </Link>
             </li>
             <li>
               <Link href="/accessories" className="px-6">
-                {t.header.nav_accessories}
+                {/* {t.header.nav_accessories} */}
+                配件
               </Link>
             </li>
           </ul>

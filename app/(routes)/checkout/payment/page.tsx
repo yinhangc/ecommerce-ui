@@ -2,7 +2,7 @@
 
 import Payment from "@/components/payment";
 import Stepper from "@/components/stepper";
-import { useAppSelector } from "@/redux/hooks";
+// import { useAppSelector } from "@/redux/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -46,7 +46,9 @@ const CheckoutPaymentPage = () => {
     defaultValues: {},
     resolver: zodResolver(checkoutPaymentFormInputSchema),
   });
-  const items = useAppSelector((state) => state.cart.items);
+  // TODO: Cart items
+  // const items = useAppSelectos((state) => state.cart.items);
+  const items: any[] = [];
 
   const watchPaymentOption = watch("deliveryOption");
   if (watchPaymentOption === "self-pickup") setValue("selfPickupAddress", "mk");
@@ -62,6 +64,7 @@ const CheckoutPaymentPage = () => {
   };
 
   const getProductsPrice = () => {
+    return 0;
     let price = 0;
     for (const item of items) {
       price += item.product.price * item.qty;

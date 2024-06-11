@@ -18,14 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
-      <html lang="en">
-        <body className={`${inter.className} relative`}>
-          <Header />
-          <Sidebars />
-          <main>{children}</main>
-        </body>
-      </html>
-    </Providers>
+    // <Providers>
+    <html lang="en">
+      <body className={`${inter.className} relative`}>
+        <Header />
+        <Sidebars />
+        <main>{children}</main>
+      </body>
+    </html>
+    // </Providers>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { useAppDispatch } from "@/redux/hooks";
-import { addToCart } from "@/redux/slices/cart.slice";
+// import { useAppDispatch } from "@/redux/hooks";
+// import { addToCart } from "@/redux/slices/cart.slice";
 import AddToCartBtn from "@/components/addToCartBtn";
 import Carousel from "@/components/carousel";
 import QtyBtn from "@/components/qtyBtn";
@@ -84,8 +84,8 @@ const BeanPage = () => {
       quantity: 1,
     },
   });
-  const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
+  // const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<BeanFormInput> = (data) => {
     const price = find(product.priceList, { size: data.weight })?.price;
@@ -97,18 +97,19 @@ const BeanPage = () => {
     })?.label;
     if (!price || !weightLabel || !grindLevelLabel) return;
     const description = `${weightLabel}, ${grindLevelLabel}`;
-    dispatch(
-      addToCart({
-        product: {
-          id: product.id,
-          name: product.name,
-          price,
-          imagePath: product.imagePath,
-          description,
-        },
-        qty: data.quantity,
-      }),
-    );
+    // TODO: Add to cart
+    // dispatch(
+    //   addToCart({
+    //     product: {
+    //       id: product.id,
+    //       name: product.name,
+    //       price,
+    //       imagePath: product.imagePath,
+    //       description,
+    //     },
+    //     qty: data.quantity,
+    //   }),
+    // );
   };
 
   return (

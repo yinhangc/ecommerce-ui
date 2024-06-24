@@ -100,7 +100,7 @@ const Header = () => {
               name="language"
               render={({ field: { value, onChange } }) => (
                 <Dropdown
-                  {...dropdownProps["language"]}
+                  {...dropdownProps['language']}
                   value={value}
                   onChange={onChange}
                 />
@@ -111,7 +111,7 @@ const Header = () => {
               name="currency"
               render={({ field: { value, onChange } }) => (
                 <Dropdown
-                  {...dropdownProps["currency"]}
+                  {...dropdownProps['currency']}
                   value={value}
                   onChange={onChange}
                 />
@@ -119,7 +119,7 @@ const Header = () => {
             />
           </div>
           <div
-            className={`basis-2/6 transition-all duration-200 ease-in-out ${isShrink ? "h-[125px]" : "h-[200px]"} `}
+            className={`basis-2/6 transition-all duration-200 ease-in-out ${isShrink ? 'h-[125px]' : 'h-[200px]'} `}
           >
             <Image
               src={logo}
@@ -129,7 +129,7 @@ const Header = () => {
               width="0"
               height="0"
               style={{
-                margin: "auto",
+                margin: 'auto',
               }}
             />
           </div>
@@ -153,7 +153,7 @@ const Header = () => {
           </div>
         </div>
         <nav className="pointer-events-auto">
-          <ul className="flex h-full items-center justify-center bg-leather-500 py-4 text-white">
+          <ul className="bg-dark-blue flex h-full items-center justify-center py-4 text-white">
             <li>
               <Link href="/" className="px-6">
                 {/* {t.header.nav_home} */}
@@ -161,9 +161,8 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="/beans" className="px-6">
-                {/* {t.header.nav_beans} */}
-                咖啡豆
+              <Link href="/sneakers" className="px-6">
+                {/* {t.header.nav_sneakers} */}鞋
               </Link>
             </li>
             <li>

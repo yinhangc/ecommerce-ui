@@ -12,24 +12,24 @@ interface I18nState {
 }
 
 const initialState: I18nState = {
-  language: "zh",
+  language: 'zh',
   translations: {
     zh: {
       header: {
-        nav_login: "登入",
-        nav_cart: "購物車",
-        nav_home: "主頁",
-        nav_beans: "咖啡豆",
-        nav_accessories: "配件",
+        nav_login: '登入',
+        nav_cart: '購物車',
+        nav_home: '主頁',
+        nav_sneakers: '鞋',
+        nav_accessories: '配件',
       },
     },
     en: {
       header: {
-        nav_login: "Login",
-        nav_cart: "Cart",
-        nav_home: "Home",
-        nav_beans: "Beans",
-        nav_accessories: "Accessories",
+        nav_login: 'Login',
+        nav_cart: 'Cart',
+        nav_home: 'Home',
+        nav_sneakers: 'Sneakers',
+        nav_accessories: 'Accessories',
       },
     },
   },

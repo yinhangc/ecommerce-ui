@@ -1,14 +1,15 @@
-const BASE_URL = "http://localhost:8888/v1/api/products/list";
+console.log('process.env.SERVER_URL', process.env.SERVER_URL);
+const BASE_URL = `${process.env.SERVER_URL}/v1/api/products/list`;
 
 export async function POST(req: Request) {
-  console.log("POST req", req);
+  const body = await req.json();
   const res = await fetch(BASE_URL, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
+    body,
   });
   const data = await res.json();
   return Response.json(data);
-  //   return data;
 }

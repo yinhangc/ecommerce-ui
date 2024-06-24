@@ -1,6 +1,5 @@
 import Header from "@/components/header";
-import Sidebars from "@/components/sidebar/sidebars";
-import Providers from "@/redux/providers";
+import Sidebars from '@/components/sidebar/sidebars';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";

@@ -15,7 +15,7 @@ export interface RadioSelectProps {
 
 const RadioSelect: React.FC<RadioSelectProps> = (props) => {
   const { label, groupId = "", options, value, onChange } = props;
-  const labelClassWithGroupId = `bg-leather-500 border-leather-500 font-medium text-white`;
+  const labelClassWithGroupId = `bg-blue border-blue font-medium text-white`;
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!onChange) return;

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
 // import { useAppDispatch } from "@/redux/hooks";
 // import { addToCart } from "@/redux/slices/cart.slice";
-import AddToCartBtn from "@/components/addToCartBtn";
-import Carousel from "@/components/carousel";
-import QtyBtn from "@/components/qtyBtn";
-import RadioSelect, { RadioSelectProps } from "@/components/radioSelect";
+import AddToCartBtn from '@/components/addToCartBtn';
+import Carousel from '@/components/carousel';
+import QtyBtn from '@/components/qtyBtn';
+import RadioSelect, { RadioSelectProps } from '@/components/radioSelect';
 import {
   faGauge,
   faLayerGroup,
@@ -13,23 +13,23 @@ import {
   faMountain,
   faStarOfDavid,
   faWind,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InformationCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
-import find from "lodash/find";
-import { useParams } from "next/navigation";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { InformationCircleIcon, PencilIcon } from '@heroicons/react/24/outline';
+import find from 'lodash/find';
+import { useParams } from 'next/navigation';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 const product = {
-  id: "brazil-cerrado-natural",
-  name: "Brazil Cerrado Natural 巴西🇧🇷 喜拉朵日曬",
-  origin: "Cerrado, Brazil",
-  elevation: "1000-1200m",
-  flavourEn: "Dark chocolate, Creamy, Smoked, Nuts",
-  flavourZh: "黑巧克力、奶油、煙燻、堅果",
-  roastLevel: "Medium Dark",
-  acidity: "Light",
-  process: "Natural",
+  id: 'brazil-cerrado-natural',
+  name: 'Brazil Cerrado Natural 巴西🇧🇷 喜拉朵日曬',
+  origin: 'Cerrado, Brazil',
+  elevation: '1000-1200m',
+  flavourEn: 'Dark chocolate, Creamy, Smoked, Nuts',
+  flavourZh: '黑巧克力、奶油、煙燻、堅果',
+  roastLevel: 'Medium Dark',
+  acidity: 'Light',
+  process: 'Natural',
   descriptionEn: `Brazilian Cerrado coffee is suitable for drip filtering and espresso brewing. It is highly beloved for its popular flavor profile, which includes the aroma of roasted walnuts and hazelnuts, complemented by a hint of caramel-like sweetness and rich chocolate flavors.
 
     This coffee is cultivated by thousands of small farmers in the Cerrado region of Brazil, located in the lush and diverse Cerrado belt, which is one of the largest coffee exporting regions globally. The area is renowned for its mix of grasslands, woodlands, and forests, as well as its fertile soil known as "Terra Roxa" (Red Earth) by the locals. The combination of high daytime temperatures and a dry environment makes the Cerrado region ideal for coffee cultivation at relatively low altitudes (around 1,100 meters) compared to other Central and South American coffee-growing regions.
@@ -41,31 +41,31 @@ const product = {
     
     這些獨特的品質使得喜拉朵成為巴西首個獲得原產地保護地位的地區，這意味著標有“Cerrado”標籤的咖啡必須來自喜拉朵地區（類似於保護伊比利亞火腿或香檳的規定） 。對於那些欣賞單一產地咖啡的顧客來說，他們不僅欣賞其獨特的風味特點，還欣賞其代表的倫理、可追溯和最高品質的咖啡。巴西喜拉朵咖啡是一款獨特的咖啡，很快就會成為必備的選擇。`,
   priceList: [
-    { size: "100g", price: 80 },
-    { size: "200g", price: 130 },
+    { size: '100g', price: 80 },
+    { size: '200g', price: 130 },
   ],
-  imagePath: "/beans/brazil-cerrado-natural.png",
+  imagePath: '/beans/brazil-cerrado-natural.png',
 };
 
 const radioSelectProps: { [key: string]: RadioSelectProps } = {
   weight: {
-    label: "重量",
-    groupId: "weight",
+    label: '重量',
+    groupId: 'weight',
     options: [
-      { label: "100g", value: "100g" },
-      { label: "200g", value: "200g" },
+      { label: '100g', value: '100g' },
+      { label: '200g', value: '200g' },
     ],
   },
   grindLevel: {
-    label: "研磨度",
-    groupId: "grindLevel",
+    label: '研磨度',
+    groupId: 'grindLevel',
     options: [
-      { label: "原豆", value: "whole-bean" },
-      { label: "濃縮咖啡	", value: "espresso" },
-      { label: "手沖咖啡", value: "hand-drip" },
-      { label: "愛樂壓	", value: "aeropress" },
-      { label: "莫卡壺", value: "moka-pot" },
-      { label: "法式壓濾壺", value: "french-press" },
+      { label: '原豆', value: 'whole-bean' },
+      { label: '濃縮咖啡	', value: 'espresso' },
+      { label: '手沖咖啡', value: 'hand-drip' },
+      { label: '愛樂壓	', value: 'aeropress' },
+      { label: '莫卡壺', value: 'moka-pot' },
+      { label: '法式壓濾壺', value: 'french-press' },
     ],
   },
 };
@@ -79,8 +79,8 @@ interface BeanFormInput {
 const BeanPage = () => {
   const { control, handleSubmit } = useForm<BeanFormInput>({
     defaultValues: {
-      weight: "100g",
-      grindLevel: "whole-bean",
+      weight: '100g',
+      grindLevel: 'whole-bean',
       quantity: 1,
     },
   });
@@ -115,7 +115,7 @@ const BeanPage = () => {
   return (
     <section className="mx-auto flex max-w-7xl justify-center gap-x-8 px-6 py-8">
       <div className="w-1/2">
-        <Carousel imagePaths={["/beans/brazil-cerrado-natural.png"]} />
+        <Carousel imagePaths={['/beans/brazil-cerrado-natural.png']} />
       </div>
       <div className="w-1/2">
         <h2 className="mb-8 text-3xl font-semibold">{product.name}</h2>
@@ -127,7 +127,7 @@ const BeanPage = () => {
               name="weight"
               render={({ field: { value, onChange } }) => (
                 <RadioSelect
-                  {...radioSelectProps["weight"]}
+                  {...radioSelectProps['weight']}
                   value={value}
                   onChange={onChange}
                 />
@@ -138,7 +138,7 @@ const BeanPage = () => {
               name="grindLevel"
               render={({ field: { value, onChange } }) => (
                 <RadioSelect
-                  {...radioSelectProps["grindLevel"]}
+                  {...radioSelectProps['grindLevel']}
                   value={value}
                   onChange={onChange}
                 />
